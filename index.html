@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Details</title>
+    <style>
+        body {
+            background-color: rgb(32, 153, 218);
+        }
+        h1 {
+            text-align: center;
+            color: beige;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+            gap: 30px;
+            width: 500px;
+            margin-top: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+        }
+        .card {
+            width: 130px;
+            height: 100px;
+            border-radius: 10px;
+            border: 1px solid black;
+            background-color: bisque;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            line-height: 100px; 
+        }
+        .card a {
+            text-decoration: none;
+            color: black;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hidden {
+            display: none;
+        }
+        #back-button {
+            border-radius: 7px;
+            color: rgb(42, 136, 165);
+        }
+    </style>
+</head>
+<body>
+    <h1>Wonders of India</h1>
+    <div class="container" id="card-container"></div>
+
+    <div class="card-details hidden" id="card-details">
+        <h2 id="card-title"></h2>
+        <p id="card-content"></p>
+        <button id="back-button">Back to Cards</button>
+    </div>
+
+    <script>
+        const cardData = [
+            { id: 1, title: "Taj Mahal", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Taj_Mahal" },
+            { id: 2, title: "Gotameshwar", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Gommateshwara_statue" },
+            { id: 3, title: "Golden Temple", content: "Wonder of india", url: "https://www.britannica.com/topic/Golden-Temple" },
+            { id: 4, title: "Sun Temple", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Konark_Sun_Temple" },
+            { id: 5, title: "Khajurao", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Khajuraho_Group_of_Monuments" },
+            { id: 6, title: "Nalanda Temple", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Nalanda_University" },
+            { id: 7, title: "Jaisalmer Fort", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Jaisalmer_Fort" },
+            { id: 8, title: "Qutb Minar", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Qutb_Minar" },
+            { id: 9, title: "Amber Fort", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Amber_Fort" },
+            { id: 10, title: "Charminar", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Charminar" },
+            { id: 11, title: "Red Fort", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Red_Fort" },
+            { id: 12, title: "Hampi Fort", content: "Wonder of india", url: "https://en.wikipedia.org/wiki/Hampi" },
+            ,
+        ];
+
+        function createCards() {
+            const container = document.getElementById('card-container');
+            cardData.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+
+                const linkElement = document.createElement('a');
+                linkElement.href = card.url;
+                linkElement.target = '_blank'; 
+                linkElement.textContent = card.title;
+
+                cardElement.appendChild(linkElement);
+
+                cardElement.addEventListener('click', (event) => {
+                   
+                    if (!document.getElementById('card-details').classList.contains('hidden')) {
+                        event.preventDefault();
+                        showCardDetails(card.id);
+                    }
+                });
+
+                container.appendChild(cardElement);
+            });
+        }
+
+        function showCardDetails(cardId) {
+            const card = cardData.find(card => card.id === cardId);
+            if (card) {
+                document.getElementById('card-title').textContent = card.title;
+                document.getElementById('card-content').textContent = card.content;
+                document.getElementById('card-container').classList.add('hidden');
+                document.getElementById('card-details').classList.remove('hidden');
+            }
+        }
+
+        function backToCards() {
+            document.getElementById('card-container').classList.remove('hidden');
+            document.getElementById('card-details').classList.add('hidden');
+        }
+
+        document.getElementById('back-button').addEventListener('click', backToCards);
+
+        createCards();
+    </script>
+</body>
+</html>
